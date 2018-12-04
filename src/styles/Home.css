@@ -1,0 +1,24 @@
+.header {
+    text-align: center;
+    background-color: #cccccc;
+}
+
+.studentsContainer {
+    margin: 10px auto;
+    max-width: 900px;
+}
+.loading {
+    text-align: center;
+    font-weight: 500;
+}
+
+.header button, .header input {
+    margin: 5px;
+    padding: 5px;
+}
+
+.studentCard {
+    border: 1px solid #cccccc;
+    width: 300px;
+    float: left;
+}

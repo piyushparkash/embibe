@@ -1,28 +1,41 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, { Component } from "react";
+import { Route, Switch } from 'react-router-dom'
+import SignInContainer from './components/SignInContainer'
+import Home from './components/Home'
 import './App.css';
+import { Provider } from 'react-redux';
+import store from './store'
+import { BrowserRouter, Redirect } from 'react-router-dom'
+
+
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    render() {
+
+        if (window.document.cookie.indexOf("login=true") === -1 && window.location.pathname !== '/signin') {
+            //Sign In Cookie is not set, redirect to Homepage
+            return <Redirect push to='/signin' />
+        }
+        return (
+            
+            <Switch>
+                <Route exact path='/home' component={Home}/>
+                <Route exact path='/signin' component={SignInContainer} />
+            </Switch>
+        )
+        
+    }
 }
 
-export default App;
+function baseComponent() {
+    return (
+        <Provider store={store}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </Provider>
+    )
+}
+
+
+export default baseComponent
