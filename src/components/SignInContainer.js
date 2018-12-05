@@ -34,7 +34,6 @@ class SignInContainer extends Component {
   }
 
   handleSubmit(e) {
-    debugger
     e.preventDefault();
     //Check if username password is correct
     if (this.state.username == 'embibe' && this.state.password == 'embibe') {

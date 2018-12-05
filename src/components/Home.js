@@ -56,7 +56,6 @@ class Home extends Component {
                 return (e.name.toLowerCase().startsWith(searchName.toLowerCase()))
             })
         }
-        debugger
 
         return (
             modifiedList.map((student) => {

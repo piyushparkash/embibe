@@ -33,7 +33,6 @@ class StudentCard extends Component {
         if (this.state.showDetails) {
             return <Redirect push to={`/${this.props.id}`} />
         }
-        debugger
 
 
         return (
