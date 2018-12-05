@@ -2,11 +2,6 @@
     text-align: center;
     background-color: #cccccc;
 }
-
-.studentsContainer {
-    margin: 10px auto;
-    max-width: 900px;
-}
 .loading {
     text-align: center;
     font-weight: 500;
@@ -17,8 +12,24 @@
     padding: 5px;
 }
 
+.studentsContainer {
+    margin: 10px auto;
+    max-width: 900px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center
+}
+
 .studentCard {
     border: 1px solid #cccccc;
-    width: 300px;
+    width: 250px;
     float: left;
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.studentCard:hover {
+    box-shadow: inset 0 0 7px;
+    transition: box-shadow .5s;
 }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { dashboardEndLoading, fetchDashboardStudents } from '../actions/dashboardActionCreators'
 import '../styles/Home.css'
+import StudentCard from './StudentCard'
 
 class Home extends Component {
     constructor(props) {
@@ -75,23 +76,22 @@ class Home extends Component {
         for (let key in this.props.studentList) {
             if (this.state.searchName !== '' && this.props.studentList[key].name.startsWith(this.state.searchName)) {
                 studentUI.push(
-                    <div className='studentCard' key={key}>
-                        <h6>{this.props.studentList[key].name}</h6>
-                        <p>Class: {this.props.studentList[key].class}</p>
-                        <p>RollNo: {this.props.studentList[key].rollNo}</p>
-                        <p>Total Marks: {this.totalMarks(this.props.studentList[key].marks)}</p>
-                    </div>
+                    <StudentCard name={this.props.studentList[key].name}
+                                class={this.props.studentList[key].class}
+                                rollNo={this.props.studentList[key].rollNo}
+                                marks={this.props.studentList[key].marks}
+                                id={key}
+                    />
 
                 )
             } else if (this.state.searchName == '') {
                 studentUI.push(
-                    <div className='studentCard'>
-                        <h6>{this.props.studentList[key].name}</h6>
-                        <p>Class: {this.props.studentList[key].class}</p>
-                        <p>RollNo: {this.props.studentList[key].rollNo}</p>
-                        <p>Total Marks: {this.totalMarks(this.props.studentList[key].marks)}</p>
-                    </div>
-
+                    <StudentCard name={this.props.studentList[key].name}
+                                class={this.props.studentList[key].class}
+                                rollNo={this.props.studentList[key].rollNo}
+                                marks={this.props.studentList[key].marks}
+                                id={key}
+                    />
                 )
             }
         }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Switch } from 'react-router-dom'
 import SignInContainer from './components/SignInContainer'
 import Home from './components/Home'
+import StudentDetails from './components/StudentDetails'
 import './App.css';
 import { Provider } from 'react-redux';
 import store from './store'
@@ -21,6 +22,7 @@ class App extends Component {
             <Switch>
                 <Route exact path='/home' component={Home}/>
                 <Route exact path='/signin' component={SignInContainer} />
+                <Route exact path='/:id' component={StudentDetails} />
             </Switch>
         )
         
