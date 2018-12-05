@@ -33,11 +33,12 @@ class StudentCard extends Component {
         if (this.state.showDetails) {
             return <Redirect push to={`/${this.props.id}`} />
         }
+        debugger
 
 
         return (
             <div className='studentCard' key={this.props.key} onClick={this.cardClickHandle}>
-                <h6>{this.props.name}</h6>
+                <h2>{this.props.name}</h2>
                 <p>Class: {this.props.class}</p>
                 <p>RollNo: {this.props.rollNo}</p>
                 <p>Total Marks: {this.totalMarks(this.props.marks)}</p>

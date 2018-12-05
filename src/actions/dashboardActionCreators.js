@@ -8,7 +8,12 @@ export const dashboardEndLoading = () => dispatch => {
 
 export const fetchDashboardStudents = () => dispatch => {
     
-    fetch('https://api.myjson.com/bins/1dlper').then(res => res.json()).then (res => {
+    fetch('https://api.myjson.com/bins/1dlper')
+    .then(res => res.json())
+    .catch(function (e) {
+        console.log("Error while fetching data", e);
+    })
+    .then (res => {
 
         dispatch({
             type: DASHBOARD_LOADING_END

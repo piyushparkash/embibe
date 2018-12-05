@@ -13,9 +13,18 @@ const dashboard = function(state = initialState, action) {
                 isLoading: false
             }
         case STUDENT_DATA_LOADED:
+            //Change the Object into array of objects
+            let finalStudentList = []
+            for (let key in action.payload) {
+                finalStudentList.push({
+                    ...action.payload[key],
+                    id: key
+                })
+            }
             return {
                 ...state,
-                studentList: action.payload
+                studentList: finalStudentList,
+                ULStudentList: action.payload
             }
 
         default:

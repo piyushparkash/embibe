@@ -15,3 +15,7 @@
 .chart {
     display: inline-block;
 }
+
+.actionButtons {
+    text-align: center;
+}

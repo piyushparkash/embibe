@@ -19,6 +19,7 @@ class Home extends Component {
         this.handleSearchNameChange = this.handleSearchNameChange.bind(this)
         this.toggleMarksSort = this.toggleMarksSort.bind(this)
         this.toggleNameSort = this.toggleNameSort.bind(this)
+        this.renderStudentsList = this.renderStudentsList.bind(this)
 
     }
     componentDidMount() {
@@ -37,66 +38,36 @@ class Home extends Component {
     }
 
     renderStudentsList(searchName = this.state.searchName, sortedByName = this.state.sortByName, sortedByNumber = this.state.sortByMarks) {
-        let studentUI = [], modifiedStudentList = []
+        let modifiedList = this.props.studentList.concat()
 
-        //Need to Convert this to Array of objects
-        // for (let key in this.props.studentList) {
-        //     modifiedStudentList.push({
-        //         ...this.props.studentList[key],
-        //         id: key
-        //     })
-        // }
-
-        // if (sortedByName) {
-        //     modifiedStudentList.sort(function (a, b) {
-        //         return a.name > b.name
-        //     })
-        // }
-        // else if (sortedByNumber) {
-        //     modifiedStudentList.sort((a, b) => {
-        //         return this.totalMarks(a.marks) > this.totalMarks(b.marks)
-        //     })
-        // }
-
-        // return (
-        //     modifiedStudentList.map(function (elem) {
-        //         return (
-        //             <div className='studentCard' key={elem.id}>
-        //             <h6>{elem.name}</h6>
-        //             <p>Class: {elem.class}</p>
-        //             <p>RollNo: {elem.rollNo}</p>
-        //             <p>Total Marks: {this.totalMarks(elem.marks)}</p>
-        //         </div>
-        //         )
-        //     }.bind(this))
-        // )
-
-
-
-        for (let key in this.props.studentList) {
-            if (this.state.searchName !== '' && this.props.studentList[key].name.startsWith(this.state.searchName)) {
-                studentUI.push(
-                    <StudentCard name={this.props.studentList[key].name}
-                                class={this.props.studentList[key].class}
-                                rollNo={this.props.studentList[key].rollNo}
-                                marks={this.props.studentList[key].marks}
-                                id={key}
-                    />
-
-                )
-            } else if (this.state.searchName == '') {
-                studentUI.push(
-                    <StudentCard name={this.props.studentList[key].name}
-                                class={this.props.studentList[key].class}
-                                rollNo={this.props.studentList[key].rollNo}
-                                marks={this.props.studentList[key].marks}
-                                id={key}
-                    />
-                )
-            }
+        if (sortedByName) {
+            modifiedList = modifiedList.sort(function (a, b) {
+                return a.name.localeCompare(b.name)
+            })
+        } else if (sortedByNumber) {
+            modifiedList = modifiedList.sort((a, b) => {
+                return this.totalMarks(b.marks) - this.totalMarks(a.marks)
+            })
         }
+        
 
-        return studentUI
+        if (searchName.trim() != '') {
+            modifiedList = modifiedList.filter((e) => {
+                return (e.name.toLowerCase().startsWith(searchName.toLowerCase()))
+            })
+        }
+        debugger
+
+        return (
+            modifiedList.map((student) => {
+                return (<StudentCard name={student.name}
+                    class={student.class}
+                    rollNo={student.rollNo}
+                    marks={student.marks}
+                    id={student.id}
+                />)
+            })
+        )
     }
 
     handleSearchNameChange(e) {
@@ -107,13 +78,15 @@ class Home extends Component {
 
     toggleNameSort() {
         this.setState({
-            sortByName: !this.state.sortByName,
+            sortByName: true,
+            sortByMarks: false
         })
     }
 
     toggleMarksSort() {
         this.setState({
-            sortByMarks: !this.state.sortByMarks
+            sortByMarks: true,
+            sortByName: false
         })
     }
 
@@ -122,7 +95,7 @@ class Home extends Component {
         return (
             <>
                 <header className='header'>
-                    <input type='text' value={this.state.searchName} onChange={this.handleSearchNameChange} />
+                    <input type='text' placeholder='Search by Name..' value={this.state.searchName} onChange={this.handleSearchNameChange} />
                     <button onClick={this.toggleNameSort}>Sort by Name</button>
                     <button onClick={this.toggleMarksSort}>Sort By Marks</button>
                 </header>

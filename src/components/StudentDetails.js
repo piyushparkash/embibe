@@ -9,12 +9,26 @@ class StudentDetails extends Component {
     constructor(props) {
         super(props)
 
+        this.state = {
+            goBack: false
+        }
+
 
         //Get the id of the student which is to be shown
         this.studentID = parseInt(window.location.pathname.substr(1))
     }
 
+    handleGoBackButton = () => {
+        this.setState({
+            goBack: true
+        })
+    }
+
     render = () => {
+
+        if (this.state.goBack) {
+            return <Redirect push to='/home' />
+        }
 
 
         if (!this.props.studentList) {
@@ -25,35 +39,41 @@ class StudentDetails extends Component {
         var data = {
             labels: ["S1", "S2", "S3", "S4"],
             series: [
-              Object.values(currentStudent.marks)
+                Object.values(currentStudent.marks)
             ]
-          };
-       
-          var options = {
+        };
+
+        var options = {
             high: 150,
             low: 0,
-          };
+        };
 
-          var type = 'Bar'
+        var type = 'Bar'
 
         return (
-            <div className='studentDetailsContainer'>
-                <div className='studentDetails'>
-                    <h2>{currentStudent.name}</h2>
-                    <p>{currentStudent.rollNo}</p>
-                    <p>{currentStudent.class}</p>
+            <>
+                <div className='studentDetailsContainer'>
+                    <div className='studentDetails'>
+                        <h2>Name: {currentStudent.name}</h2>
+                        <p>Roll No: {currentStudent.rollNo}</p>
+                        <p>Class: {currentStudent.class}</p>
+
+                        <div>
+                            <ChartistGraph data={data} options={options} type={type} />
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <ChartistGraph data={data} options={options} type={type} />
+                <div className='actionButtons'>
+                    <button onClick={this.handleGoBackButton}>Go Back</button>
                 </div>
-            </div>
+            </>
         )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        studentList: state.dashboard.studentList
+        studentList: state.dashboard.ULStudentList
     };
 }
 
